@@ -14,7 +14,7 @@ find_package(GTest REQUIRED)
 #INCLUDES
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../DevFramework/Logger)
 include_directories(${GTEST_INCLUDE_DIRS})
-include_directories(${CMAKE_SOURCE_DIR}/src})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src})
 
 #SOURCE FILES
 file(GLOB SOURCES
