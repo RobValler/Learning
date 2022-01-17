@@ -5,11 +5,6 @@
 #include<iostream>
 #include <gtest/gtest.h>
 
-TEST(Tester, Test_Func)
-{
-
-}
-
 int main(int argc, char *argv[])
 {
     int result;

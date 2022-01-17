@@ -26,6 +26,16 @@ public:
         return m_id;
     }
 
+    float GetWeight() const
+    {
+        return m_weight;
+    }
+
+    float GetInput() const
+    {
+        return m_input;
+    }
+
 private:
     std::string m_id{""};
     float m_weight{0.0F};
@@ -38,6 +48,8 @@ public:
     CNeuron() =default;
     ~CNeuron() =default;
 
+    void Process();
+
     void AddSynapse(CSynapse& synapse)
     {
         m_listOfConnectedNeurons.emplace_back(synapse);
@@ -47,8 +59,10 @@ public:
     {
         for(auto& it: m_listOfConnectedNeurons)
         {
-            if(id == it.GetID())
+            if(id == it.GetID()) {
                 it.SetInput(input);
+                break;
+            }
         }
     }
 
@@ -56,9 +70,16 @@ public:
     {
         for(auto& it: m_listOfConnectedNeurons)
         {
-            if(id == it.GetID())
+            if(id == it.GetID()) {
                 it.SetWeight(weight);
+                break;
+            }
         }
+    }
+
+    void SetExpectedOutput(float expected_output)
+    {
+        m_expected_output = expected_output;
     }
 
     void SetBias(float bias)
@@ -74,6 +95,7 @@ public:
 private:
     float m_bias{0};
     float m_output{0};
+    float m_expected_output{0};
 
     std::vector<CSynapse> m_listOfConnectedNeurons;
 
