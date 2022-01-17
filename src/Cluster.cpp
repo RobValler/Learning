@@ -66,26 +66,16 @@ void CCluster::CreateNeuralCluster()
 
             for(const auto& it_outputs: m_outputNeuron)
             {
-<<<<<<< HEAD
                 m_NeuronRoute = {it_inputs->GetID(), it_hidden1->GetID(), it_outputs->GetID()};
                 m_NeuronRouteList.emplace_back(m_NeuronRoute);
 
                 CLogger::Print(LOGLEV_RUN, "Input = ", m_NeuronRoute[0] );
                 CLogger::Print(LOGLEV_RUN, "Hidden = ", m_NeuronRoute[1] );
                 CLogger::Print(LOGLEV_RUN, "Output = ", m_NeuronRoute[2] );
-=======
 
-                it_outputs->AddSynapse(it_hidden1);
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
             }
         }
     }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
-
 }
 
 void CCluster::SetInput(float input1, float input2)
@@ -103,13 +93,7 @@ void CCluster::TriggerExecution()
 {
     for(auto& it : m_hiddenCluster1)
     {
-<<<<<<< HEAD
 
-
-
-    }
-=======
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
 
     }
 }

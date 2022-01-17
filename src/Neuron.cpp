@@ -31,15 +31,12 @@ void CNeuron::AddSynapseLink(std::shared_ptr<CSynapse> link)
 
 void CNeuron::AddSynapse()
 {
-<<<<<<< HEAD
     SSynapse synapse;
     synapse.inputFromPrevious = 0;
     synapse.weightingForCurrent = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
     CLogger::Print(LOGLEV_RUN, "NEURON ", m_neuronName, " : Input = ", synapse.inputFromPrevious, ", Weighting ", synapse.weightingForCurrent);
     m_synapseList.emplace_back(std::move(synapse));
-=======
 
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
 }
 
 void CNeuron::UpdateInput(float intput)

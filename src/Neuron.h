@@ -45,12 +45,7 @@ private:
     float m_inputValue;
 };
 
-<<<<<<< HEAD
 class CNeuron : public INeuron
-=======
-
-class CNeuron : public IBlock
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
 {
 public:
     CNeuron(CCluster& parent, int ID, std::string name)
@@ -73,13 +68,6 @@ public:
 
 
     // Layer handlers
-<<<<<<< HEAD
-=======
-    void AddSynapse(std::shared_ptr<IBlock> link) override;
-    void AddSynapseLink(std::shared_ptr<CSynapse> link) override;
-
-    void AddInput(float input);
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
     void UpdateInput(float intput);
     void UpdateWeightings(float weighting);
     float GetValue() override;

@@ -10,13 +10,8 @@
 #ifndef DFW_LEARNING_INPUT_H
 #define DFW_LEARNING_INPUT_H
 
-<<<<<<< HEAD
 #include "INeuron.h"
-=======
-#include "IBlock.h"
-#include "Neuron.h"
 
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
 #include <string>
 #include <memory>
 #include <vector>
@@ -43,15 +38,7 @@ public:
     std::string GetName() override { return m_inputName; }
     float GetValue() override { return m_value; }
     void SetValue(float value) override { m_value = value; }
-<<<<<<< HEAD
     void AddSynapse() override {}
-=======
-    void AddSynapse(std::shared_ptr<IBlock>) override {}
-    void AddSynapseLink(std::shared_ptr<CSynapse> link) override
-    {
-        m_synapseForwardList.emplace_back(link);
-    }
->>>>>>> 9a0becefad40eb07c82c48f80b8d63a82cab5e40
 
 
 private:
