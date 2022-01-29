@@ -1,7 +1,7 @@
 /*****************************************************************
- * Copyright (C) 2017-2019 Robert Valler - All rights reserved.
+ * Copyright (C) 2017-2022 Robert Valler - All rights reserved.
  *
- * This file is part of the project: Comms
+ * This file is part of the project: Learning
  *
  * This project can not be copied and/or distributed
  * without the express permission of the copyright holder
@@ -10,8 +10,7 @@
 #include <gtest/gtest.h>
 
 #include "../src/neuron.h"
-
-//#include <iostream>
+#include "../src/local_math.h"
 
 
 /* ANN XOR example
@@ -22,76 +21,115 @@
  *  0  1      1
  *  1  0      1
  *  1  1      0
- *
  */
+struct XOR_format {
+    float A;
+    float B;
+    float Out;
+};
+
+XOR_format XORInputOutput[]
+{
+    {0.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 1.0f},
+    {1.0f, 0.0f, 1.0f},
+    {1.0f, 1.0f, 0.0f},
+};
+
 TEST(Learning, XOR_Example)
 {
-    // set inputs and outputs - INPUT LAYER
-    float input_1 = 1;
-    float input_2 = 0;
-    float output = 1;
-    float expected_output = 1;
-    float initial_weight = 0.1f;
-    float bias = 0.5f;
-
-    // build the network
-    // HIDDEN LAYER
+    // -- build the network --
+    const float default_bias = 1.0f;
+    // hidden layer
     CNeuron n1;
-    n1.SetBias(bias);
+    n1.SetBias(default_bias);
     CSynapse w11("w11");
     CSynapse w21("w21");
     n1.AddSynapse(w11);
     n1.AddSynapse(w21);
-    n1.SetSynapseWeight("w11", initial_weight);
-    n1.SetSynapseWeight("w21", initial_weight);
+    n1.SetSynapseWeight("w11", random_num());
+    n1.SetSynapseWeight("w21", random_num());
 
     CNeuron n2;
-    n2.SetBias(bias);
+    n2.SetBias(default_bias);
     CSynapse w12("w12");
     CSynapse w22("w22");
     n2.AddSynapse(w12);
     n2.AddSynapse(w22);
-    n2.SetSynapseWeight("w12", initial_weight);
-    n2.SetSynapseWeight("w22", initial_weight);
+    n2.SetSynapseWeight("w12", random_num());
+    n2.SetSynapseWeight("w22", random_num());
 
-    // OUTPUT LAYER
+    // output layer
     CNeuron n3;
-    n3.SetBias(bias);
+    n3.SetBias(default_bias);
     CSynapse w31("w31");
     CSynapse w32("w32");
     n3.AddSynapse(w31);
     n3.AddSynapse(w32);
-    n3.SetSynapseWeight("w31", initial_weight);
-    n3.SetSynapseWeight("w32", initial_weight);
+    n3.SetSynapseWeight("w31", random_num());
+    n3.SetSynapseWeight("w32", random_num());
 
-    int numberOfLearningLoops =1; // for now
-    for(int index = 0; index < numberOfLearningLoops; ++index)
+    // -- training --
+    float error = 0.0f;
+    float derivative_n3 = 0.0f;
+    float derivative_n2 = 0.0f;
+    float derivative_n1 = 0.0f;
+    int numberOfDifferentInputs = sizeof(XORInputOutput) / sizeof(XOR_format);
+    for(int learn_index = 0; learn_index < 100; ++learn_index) // learning loop
     {
-        // process the network - left to right
-        n1.SetSynapseInput("w11", input_1);
-        n1.SetSynapseInput("w21", input_2);
+        std::cout << "-- begin loop = " << learn_index << std::endl;
+
+        for(int input_index = 0; input_index < numberOfDifferentInputs; ++input_index)
+        {
+            // process the network - left to right
+            // input
+            n1.SetSynapseInput("w11", XORInputOutput[input_index].A);
+            n1.SetSynapseInput("w21", XORInputOutput[input_index].B);
+            n1.Process();
+
+            // hidden
+            n2.SetSynapseInput("w12", XORInputOutput[input_index].A);
+            n2.SetSynapseInput("w22", XORInputOutput[input_index].B);
+            n2.Process();
+
+            // output
+            n3.SetSynapseInput("w31", n1.GetOutput());
+            n3.SetSynapseInput("w32", n2.GetOutput());
+            n3.Process();
+
+            // get the result
+            std::cout << "output = " << n3.GetOutput() << ", expected output = " << XORInputOutput[input_index].Out << std::endl;
+
+            // update the weightings
+            error = n3.GetOutput() - XORInputOutput[input_index].Out;
+            derivative_n3 = n3.Derive(-error);
+            derivative_n2 = n2.Derive(n2.GetSynapseWeight("w32") * derivative_n3);
+            derivative_n1 = n1.Derive(n2.GetSynapseWeight("w31") * derivative_n3);
+
+        } // input_index
+        std::cout << "-- end loop = " << learn_index << std::endl;
+
+    } // learn_index
+
+    // -- testing --
+    for(int input_index = 0; input_index < numberOfDifferentInputs; ++input_index)
+    {
+        // input
+        n1.SetSynapseInput("w11", XORInputOutput[input_index].A);
+        n1.SetSynapseInput("w21", XORInputOutput[input_index].B);
         n1.Process();
 
-        n2.SetSynapseInput("w12", input_1);
-        n2.SetSynapseInput("w22", input_2);
+        // hidden
+        n2.SetSynapseInput("w12", XORInputOutput[input_index].A);
+        n2.SetSynapseInput("w22", XORInputOutput[input_index].B);
         n2.Process();
 
+        // output
         n3.SetSynapseInput("w31", n1.GetOutput());
         n3.SetSynapseInput("w32", n2.GetOutput());
         n3.Process();
 
-
-        output = n3.GetOutput();
-        std::cout << "output = " << output << std::endl;
-
-
-        float reverse_weight = 0.5f * (expected_output - output);
-        std::cout << "reverse_weight = " << reverse_weight << std::endl;
-
+        // check the results
+      //  EXPECT_EQ(n3.GetOutput(), XORInputOutput[input_index].Out);
     }
-
-    // get the results
-    output = n3.GetOutput();
-//    EXPECT_EQ(output, 1);
-
 }
