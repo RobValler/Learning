@@ -24,7 +24,8 @@ inline float random_num()
 
 inline float Sigmoid(const float input)
 {
-    return 1 / (1 + exp(-input));
+    float result = 1 / (1 + exp(-input));
+    return result;
 }
 
 inline float SigmoidDerivative(const float input)

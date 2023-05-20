@@ -9,30 +9,33 @@
 
 #include "neuron.h"
 
+#include <iostream>
+
 void CNeuron::Process()
 {
-    // linear combination
+    // linear combination of all connected synapses
+    m_linear_combination = 0.0f;
     for(const auto& it: m_listOfConnectedSynapses)
     {
         m_linear_combination += (it.GetInput() * it.GetWeight());
     }
-    m_linear_combination += m_bias; //???
+    m_linear_combination += (m_bias * m_bias_weight); // Z = dot product
 
     //activation - sigmoidal
-    m_activation = Sigmoid(m_linear_combination);
-    m_output = m_activation;
+    m_activation = Sigmoid(m_linear_combination); // A - output
 }
 
-float CNeuron::Derive(float parm)
+void CNeuron::SetDerive(float parm)
 {
     // derivative of output
     m_output_derivative = (exp(m_linear_combination) / pow((1 + exp(m_linear_combination)), 2)) * parm;
 
-    // calculate weightings of all connected synapses
-    for(auto& it: m_listOfConnectedSynapses)
-    {
-        it.UpdateWeight(m_output_derivative);
-    }
+    m_bias_weight = Sigmoid(m_bias) * m_output_derivative;
+
+}
+
+float CNeuron::GetDerive()
+{
     return m_output_derivative;
 }
 
@@ -63,6 +66,30 @@ void CNeuron::SetSynapseWeight(const std::string& id, const float weight)
     }
 }
 
+void CNeuron::UpdateSynapseWeight(const std::string& id, const float derivative)
+{
+    for(auto& it: m_listOfConnectedSynapses)
+    {
+        if(id == it.GetID()) {
+            it.UpdateWeight(derivative);
+            return;
+        }
+    }
+    std::cout << "UpdateSynapseWeight Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
+}
+
+void CNeuron::UpdateSynapseWeight(const std::string& id)
+{
+    for(auto& it: m_listOfConnectedSynapses)
+    {
+        if(id == it.GetID()) {
+            it.UpdateWeight2(m_output_derivative);
+            return;
+        }
+    }
+    std::cout << "UpdateSynapseWeight Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
+}
+
 float CNeuron::GetSynapseWeight(const std::string& id)
 {
     for(auto& it: m_listOfConnectedSynapses)
@@ -71,15 +98,16 @@ float CNeuron::GetSynapseWeight(const std::string& id)
             return it.GetWeight();
         }
     }
+    std::cout << "GetSynapseWeight Error, Synapse " << id << " not found" << std::endl;
     return 0.0f;
 }
 
-void CNeuron::SetBias(float bias)
+void CNeuron::SetBiasWeight(float bias)
 {
-    m_bias = bias;
+    m_bias_weight = bias;
 }
 
 float CNeuron::GetOutput() const
 {
-    return m_output;
+    return m_activation;
 }
