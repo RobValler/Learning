@@ -43,29 +43,23 @@ TEST(Learning, XOR_Example)
 //    const float default_bias = 1.0f;
     // hidden layer
     CNeuron n1;
-    CSynapse w11("w11");
-    CSynapse w21("w21");
-    n1.AddSynapse(w11);
-    n1.AddSynapse(w21);
+    n1.AddSynapse(CSynapse("w11"));
+    n1.AddSynapse(CSynapse("w21"));
     n1.SetBias(random_num());
     n1.SetSynapseWeight("w11", random_num());
     n1.SetSynapseWeight("w21", random_num());
 
     CNeuron n2;
-    CSynapse w12("w12");
-    CSynapse w22("w22");
-    n2.AddSynapse(w12);
-    n2.AddSynapse(w22);
+    n2.AddSynapse(CSynapse("w12"));
+    n2.AddSynapse(CSynapse("w22"));
     n2.SetBias(random_num());
     n2.SetSynapseWeight("w12", random_num());
     n2.SetSynapseWeight("w22", random_num());
 
     // output layer
     CNeuron n3;
-    CSynapse w31("w31");
-    CSynapse w32("w32");
-    n3.AddSynapse(w31);
-    n3.AddSynapse(w32);
+    n3.AddSynapse(CSynapse("w31"));
+    n3.AddSynapse(CSynapse("w32"));
     n3.SetBias(random_num());
     n3.SetSynapseWeight("w31", random_num());
     n3.SetSynapseWeight("w32", random_num());
@@ -89,15 +83,19 @@ TEST(Learning, XOR_Example)
             // input -> hidden
             n1.SetSynapseInput("w11", XORInputOutput[input_index].A);
             n1.SetSynapseInput("w21", XORInputOutput[input_index].B);
-            n1.Process();
+//            n1.Process();
 
             n2.SetSynapseInput("w12", XORInputOutput[input_index].A);
             n2.SetSynapseInput("w22", XORInputOutput[input_index].B);
-            n2.Process();
+//            n2.Process();
 
             // output
             n3.SetSynapseInput("w31", n1.GetOutput());
             n3.SetSynapseInput("w32", n2.GetOutput());
+
+            //
+            n1.Process();
+            n2.Process();
             n3.Process();
 
             // is the result a NaN (Not a Number)

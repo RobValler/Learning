@@ -76,7 +76,7 @@ public:
 
     void Process();
     float Derive(float parm);
-    void AddSynapse(CSynapse& synapse);
+    void AddSynapse(const CSynapse& synapse);
     void SetSynapseInput(const std::string& id, const float input);
     void SetSynapseWeight(const std::string& id, const float weight);
     float GetSynapseWeight(const std::string& id);

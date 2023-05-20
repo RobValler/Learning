@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.22.0)
 project ( Learning )
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-set (CMAKE_CXX_STANDARD 14)
+set (CMAKE_CXX_STANDARD 17)
 set (Wall)
 set (W1)
 set (Wfloat-conversion)
@@ -14,7 +14,7 @@ find_package(GTest REQUIRED)
 #INCLUDES
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../DevFramework/Logger)
 include_directories(${GTEST_INCLUDE_DIRS})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src})
+include_directories(${CMAKE_SOURCE_DIR}/src})
 
 #SOURCE FILES
 file(GLOB SOURCES

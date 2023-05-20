@@ -36,9 +36,9 @@ float CNeuron::Derive(float parm)
     return m_output_derivative;
 }
 
-void CNeuron::AddSynapse(CSynapse& synapse)
+void CNeuron::AddSynapse(const CSynapse& synapse)
 {
-    m_listOfConnectedSynapses.emplace_back(synapse);
+    m_listOfConnectedSynapses.emplace_back(std::move(synapse));
 }
 
 void CNeuron::SetSynapseInput(const std::string& id, const float input)
