@@ -22,7 +22,9 @@ file(GLOB SOURCES
     ${CMAKE_SOURCE_DIR}/test/*.cpp
 )
 
-file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/src/*.h)
+file(GLOB HEADERS
+    ${CMAKE_SOURCE_DIR}/src/*.h
+)
 
 #GENERATE
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} )

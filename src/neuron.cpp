@@ -35,3 +35,51 @@ float CNeuron::Derive(float parm)
     }
     return m_output_derivative;
 }
+
+void CNeuron::AddSynapse(CSynapse& synapse)
+{
+    m_listOfConnectedSynapses.emplace_back(synapse);
+}
+
+void CNeuron::SetSynapseInput(const std::string& id, const float input)
+{
+    for(auto& it: m_listOfConnectedSynapses)
+    {
+        if(id == it.GetID()) {
+            it.SetInput(input);
+            break;
+        }
+    }
+}
+
+void CNeuron::SetSynapseWeight(const std::string& id, const float weight)
+{
+    for(auto& it: m_listOfConnectedSynapses)
+    {
+        if(id == it.GetID()) {
+            it.SetWeight(weight);
+            break;
+        }
+    }
+}
+
+float CNeuron::GetSynapseWeight(const std::string& id)
+{
+    for(auto& it: m_listOfConnectedSynapses)
+    {
+        if(id == it.GetID()) {
+            return it.GetWeight();
+        }
+    }
+    return 0.0f;
+}
+
+void CNeuron::SetBias(float bias)
+{
+    m_bias = bias;
+}
+
+float CNeuron::GetOutput() const
+{
+    return m_output;
+}

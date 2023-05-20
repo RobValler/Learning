@@ -76,64 +76,21 @@ public:
 
     void Process();
     float Derive(float parm);
-
-    void AddSynapse(CSynapse& synapse)
-    {
-        m_listOfConnectedSynapses.emplace_back(synapse);
-    }
-
-    void SetSynapseInput(const std::string& id, const float input)
-    {
-        for(auto& it: m_listOfConnectedSynapses)
-        {
-            if(id == it.GetID()) {
-                it.SetInput(input);
-                break;
-            }
-        }
-    }
-
-    void SetSynapseWeight(const std::string& id, const float weight)
-    {
-        for(auto& it: m_listOfConnectedSynapses)
-        {
-            if(id == it.GetID()) {
-                it.SetWeight(weight);
-                break;
-            }
-        }
-    }
-
-    float GetSynapseWeight(const std::string& id)
-    {
-        for(auto& it: m_listOfConnectedSynapses)
-        {
-            if(id == it.GetID()) {
-                return it.GetWeight();
-            }
-        }
-    }
-
-    void SetBias(float bias)
-    {
-        m_bias = bias;
-    }
-
-    float GetOutput() const
-    {
-        return m_output;
-    }
+    void AddSynapse(CSynapse& synapse);
+    void SetSynapseInput(const std::string& id, const float input);
+    void SetSynapseWeight(const std::string& id, const float weight);
+    float GetSynapseWeight(const std::string& id);
+    void SetBias(float bias);
+    float GetOutput() const;
 
 private:
     float m_bias{0};
     float m_output{0};
-
     float m_linear_combination{0};
     float m_activation{0};
     float m_output_derivative{0};
 
     std::vector<CSynapse> m_listOfConnectedSynapses;
-
 };
 
 
