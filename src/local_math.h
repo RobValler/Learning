@@ -11,15 +11,26 @@
 
 #include <math.h>
 #include <random>
-//#include <iomanip>
 
-inline float random_num()
+inline float RandomNumGen()
 {
+#if 1
     std::random_device rd;
     std::default_random_engine eng(rd());
     std::uniform_real_distribution<float> distr(-1, 1);
     float val = distr(eng);
     return val;
+#else
+    float val;
+    int randNum = rand() % 2;
+    if (randNum == 1)
+        val = -1 * (double(rand()) / (double(RAND_MAX) + 1.0)); // generate number between -1.0 and 0.0
+    else
+        val = double(rand()) / (double(RAND_MAX) + 1.0); // generate number between 1.0 and 0.0
+
+    return val;
+#endif
+
 }
 
 inline float Sigmoid(const float input)
@@ -28,8 +39,9 @@ inline float Sigmoid(const float input)
     return result;
 }
 
-inline float SigmoidDerivative(const float input)
-{
-    return input * (1 - input);
-}
+
+//inline float SigmoidDerivative(const float input)
+//{
+//    return input * (1 - input);
+//}
 
