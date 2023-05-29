@@ -9,21 +9,7 @@
 
 #pragma once
 
-#include <math.h>
-#include <random>
-
-inline float RandomNumGen()
-{
-    std::random_device rd;
-    std::default_random_engine eng(rd());
-    std::uniform_real_distribution<float> distr(-1, 1);
-    float val = distr(eng);
-    return val;
-}
-
-inline float ActivationMethod(const float input)
-{
-    // sigmoidal function
-    float result = 1 / (1 + exp(-input));
-    return result;
+namespace {
+    constexpr float l_learning_rate = 1.414213562;
+    constexpr float l_momentum = 0.25;
 }

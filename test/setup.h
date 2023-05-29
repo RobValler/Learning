@@ -7,23 +7,26 @@
  * without the express permission of the copyright holder
  *****************************************************************/
 
+
 #pragma once
 
-#include <math.h>
-#include <random>
+#include <vector>
 
-inline float RandomNumGen()
-{
-    std::random_device rd;
-    std::default_random_engine eng(rd());
-    std::uniform_real_distribution<float> distr(-1, 1);
-    float val = distr(eng);
-    return val;
-}
+struct SGateFormat {
+    int A;
+    int B;
+    int Out;
+};
 
-inline float ActivationMethod(const float input)
+class CSetupNeuralCluster
 {
-    // sigmoidal function
-    float result = 1 / (1 + exp(-input));
-    return result;
-}
+public:
+    CSetupNeuralCluster() =default;
+    ~CSetupNeuralCluster() =default;
+
+    void Run(const std::vector<SGateFormat>& InputTable);
+    int FloatToInt(const float input){
+        return static_cast<int>(input);
+    }
+
+};

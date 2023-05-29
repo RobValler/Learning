@@ -8,7 +8,9 @@
  *****************************************************************/
 
 #include "neuron.h"
+
 #include "local_math.h"
+#include "constants.h"
 
 #include <iostream>
 
@@ -26,24 +28,22 @@ void CNeuron::Process()
     {
         m_linear_combination += (it.GetInput() * it.GetWeight());
     }
-    m_linear_combination += (m_bias * m_bias_weight); // Z = dot product
+    m_linear_combination += (m_bias * m_bias_weight); // Z = combination
 
     //activation - sigmoidal
-    m_activation = Sigmoid(m_linear_combination); // A = output
+    m_activation = ActivationMethod(m_linear_combination); // A = output
 }
 
 void CNeuron::SetOutputDerive(float error)
 {
     // derivative of output neuron
     m_output_derivative = -error * (exp(m_linear_combination) / pow((1 + exp(m_linear_combination)), 2));
-//    m_bias_weight = Sigmoid(m_bias) * m_output_derivative;
 }
 
 void CNeuron::SetHiddenDerive(float derivative, float weight)
 {
     // derivative of hidden neuron
     m_output_derivative = (exp(m_linear_combination) / pow((1 + exp(m_linear_combination)), 2)) * weight * derivative;
-//    m_bias_weight = Sigmoid(m_bias) * m_output_derivative;
 }
 
 float CNeuron::GetDerive()
@@ -70,25 +70,10 @@ void CNeuron::SetSynapseInput(const std::string& id, const float input)
     std::cout << "SetSynapseInput Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
 }
 
-//void CNeuron::SetSynapseWeight(const std::string& id, const float weight)
-//{
-//    for(auto& it: m_listOfConnectedSynapses)
-//    {
-//        if(id == it.GetID()) {
-//            it.SetWeight(weight);
-//            return;
-//        }
-//    }
-//    std::cout << "SetSynapseWeight Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
-//}
-
 void CNeuron::UpdateNeuronBias()
 {
-    const float l_learning_rate = 1.414213562;
-    const float l_momentum = 0.25;
-
     // get the gradient
-    float gradient = Sigmoid(m_bias) * m_output_derivative;
+    float gradient = ActivationMethod(m_bias) * m_output_derivative;
 
     // Update the weight
     float update_weight = (l_learning_rate * gradient) + (l_momentum * m_prev_bias_weight);
@@ -132,11 +117,6 @@ float CNeuron::GetSynapseWeight(const std::string& id)
     std::cout << "GetSynapseWeight Error, Synapse " << id << " not found" << std::endl;
     return 0.0f;
 }
-
-//void CNeuron::SetBiasWeight(float bias)
-//{
-//    m_bias_weight = bias;
-//}
 
 float CNeuron::GetOutput() const
 {

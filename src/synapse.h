@@ -10,13 +10,9 @@
 #pragma once
 
 #include "local_math.h"
+#include "constants.h"
 
 #include <string>
-
-namespace {
-    constexpr float l_learning_rate = 1.414213562;
-    constexpr float l_momentum = 0.25;
-}
 
 class CSynapse
 {
@@ -39,7 +35,7 @@ public:
     void UpdateWeight(float derivative)
     {
         // get the gradient
-        float gradient = Sigmoid(m_input) * derivative;
+        float gradient = ActivationMethod(m_input) * derivative;
 
         // Update the weight
         float update_weight = (l_learning_rate * gradient) + (l_momentum * m_prev_update_weight);

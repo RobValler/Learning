@@ -27,12 +27,10 @@ public:
     float GetDerive();
     void AddSynapse(const std::string name);
     void SetSynapseInput(const std::string& id, const float input);
-//    void SetSynapseWeight(const std::string& id, const float weight);
     void UpdateNeuronBias();
     void UpdateHiddenSynapseWeight(const std::string& id, const float weight);
     void UpdateOutputSynapseWeight(const std::string& id, const float activation);
     float GetSynapseWeight(const std::string& id);
-//    void SetBiasWeight(float bias);
     float GetOutput() const;
     void Reset();
 
