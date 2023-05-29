@@ -51,6 +51,8 @@ public:
     {
         // Update the weight
         float gradient = activation * derivative;
+
+        // Update the weight
         float update_weight = (l_learning_rate * gradient) + (l_momentum * m_prev_update_weight);
         m_prev_update_weight = update_weight;
         m_weight += update_weight;

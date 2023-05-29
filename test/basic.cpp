@@ -63,7 +63,7 @@ TEST(Learning, XOR_Example)
     // set the input
     int epoch = 0;
     int numberOfDifferentInputs = sizeof(XORInputOutput) / sizeof(XOR_format);
-    for(int learn_index = 0; learn_index < 50000; ++learn_index) // learning loop
+    for(int learn_index = 0; learn_index < 20000; ++learn_index) // learning loop
     {
 //        std::cout << "-- begin loop = " << learn_index << std::endl;
 
@@ -99,20 +99,22 @@ TEST(Learning, XOR_Example)
             // Update the weights
             n1.UpdateHiddenSynapseWeight("w11", n1.GetDerive());
             n1.UpdateHiddenSynapseWeight("w21", n1.GetDerive());
+            n1.UpdateNeuronBias();
+
             n2.UpdateHiddenSynapseWeight("w12", n2.GetDerive());
             n2.UpdateHiddenSynapseWeight("w22", n2.GetDerive());
+            n2.UpdateNeuronBias();
 
             n3.UpdateOutputSynapseWeight("w31", n1.GetOutput());
             n3.UpdateOutputSynapseWeight("w32", n2.GetOutput());
-
+            n3.UpdateNeuronBias();
 
         } // input_index
 
-        float rmse_error = sqrt((  pow(errors[0], 2) +
+        float rmse_error = sqrt((   pow(errors[0], 2) +
                                     pow(errors[1], 2) +
                                     pow(errors[2], 2) +
                                     pow(errors[3], 2) / 4));
-
 
 //        std::cout << "RMSE error: " << rmse_error << std::endl;
 //        std::cout << "-- end loop = " << learn_index << std::endl;
@@ -141,9 +143,10 @@ TEST(Learning, XOR_Example)
         // input
         n1.SetSynapseInput("w11", XORInputOutput[input_index].A);
         n1.SetSynapseInput("w21", XORInputOutput[input_index].B);
+        n1.Process();
+
         n2.SetSynapseInput("w12", XORInputOutput[input_index].A);
         n2.SetSynapseInput("w22", XORInputOutput[input_index].B);
-        n1.Process();
         n2.Process();
 
         // output
@@ -156,4 +159,5 @@ TEST(Learning, XOR_Example)
         std::cout << "output = " << result << ", expected output = " << XORInputOutput[input_index].Out << std::endl;
 //        EXPECT_EQ(result, XORInputOutput[input_index].Out);
     }
+
 }
