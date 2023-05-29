@@ -23,7 +23,9 @@ TEST(Learning, XOR_Example)
     };
 
     CSetupNeuralCluster test;
-    test.Run(XORInputOutput);
+    test.Setup(XORInputOutput);
+    test.Train();
+    test.Test();
 }
 
 TEST(Learning, AND_Example)
@@ -37,7 +39,9 @@ TEST(Learning, AND_Example)
     };
 
     CSetupNeuralCluster test;
-    test.Run(ANDInputOutput);
+    test.Setup(ANDInputOutput);
+    test.Train();
+    test.Test();
 }
 
 TEST(Learning, NAND_Example)
@@ -51,7 +55,9 @@ TEST(Learning, NAND_Example)
     };
 
     CSetupNeuralCluster test;
-    test.Run(NANDInputOutput);
+    test.Setup(NANDInputOutput);
+    test.Train();
+    test.Test();
 }
 
 TEST(Learning, NOR_Example)
@@ -65,5 +71,7 @@ TEST(Learning, NOR_Example)
     };
 
     CSetupNeuralCluster test;
-    test.Run(NORInputOutput);
+    test.Setup(NORInputOutput);
+    test.Train();
+    test.Test();
 }

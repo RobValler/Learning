@@ -7,10 +7,10 @@
  * without the express permission of the copyright holder
  *****************************************************************/
 
-
 #pragma once
 
 #include <vector>
+#include <memory>
 
 struct SGateFormat {
     int A;
@@ -18,15 +18,21 @@ struct SGateFormat {
     int Out;
 };
 
+class CNeuron;
+
 class CSetupNeuralCluster
 {
 public:
     CSetupNeuralCluster() =default;
     ~CSetupNeuralCluster() =default;
 
-    void Run(const std::vector<SGateFormat>& InputTable);
-    int FloatToInt(const float input){
-        return static_cast<int>(input);
-    }
+    void Setup(const std::vector<SGateFormat>& InputTable);
+    void Train();
+    void Test();
 
+private:
+    std::shared_ptr<CNeuron> n1;
+    std::shared_ptr<CNeuron> n2;
+    std::shared_ptr<CNeuron> n3;
+    std::vector<SGateFormat> m_InputTable;
 };
