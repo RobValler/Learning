@@ -14,8 +14,9 @@
 
 #include <iostream>
 
-CNeuron::CNeuron(std::string name)
+CNeuron::CNeuron(std::string name, ENeuronType type)
     : m_neuron_name(name)
+    , m_type(type)
 {
     m_bias_weight = RandomNumGen();
 }
@@ -86,7 +87,7 @@ void CNeuron::UpdateHiddenSynapseWeight(const std::string& id, const float deriv
     for(auto& it: m_listOfConnectedSynapses)
     {
         if(id == it.GetID()) {
-            it.UpdateWeight(m_output_derivative);
+            it.UpdateHiddenWeight(m_output_derivative);
             return;
         }
     }
@@ -99,7 +100,7 @@ void CNeuron::UpdateOutputSynapseWeight(const std::string& id, const float activ
     for(auto& it: m_listOfConnectedSynapses)
     {
         if(id == it.GetID()) {
-            it.UpdateWeight2(m_output_derivative, activation);
+            it.UpdateOutputWeight(m_output_derivative, activation);
             return;
         }
     }

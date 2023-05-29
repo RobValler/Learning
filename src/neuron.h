@@ -13,11 +13,17 @@
 
 #include <vector>
 #include <string>
+#include <cstdint>
 
 class CNeuron
 {
 public:
-    CNeuron(std::string name);
+    enum class ENeuronType : std::uint8_t {
+        EHidden =0,
+        EOutput
+    };
+
+    CNeuron(std::string name, ENeuronType type);
     ~CNeuron() =default;
 
     void Process();
@@ -36,6 +42,8 @@ public:
 
 private:
     std::string m_neuron_name;
+    ENeuronType m_type;
+
     float m_bias{1};
     float m_bias_weight{0};
     float m_prev_bias_weight{0};
