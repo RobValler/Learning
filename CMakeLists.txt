@@ -23,6 +23,7 @@ file(GLOB SOURCES
 
 file(GLOB HEADERS
     ${CMAKE_SOURCE_DIR}/src/*.h
+    ${CMAKE_SOURCE_DIR}/test/*.h
 )
 
 #GENERATE
