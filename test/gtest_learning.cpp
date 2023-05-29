@@ -28,6 +28,38 @@ TEST(Learning, XOR_Example)
     test.Test();
 }
 
+TEST(Learning, NOR_Example)
+{
+    std::vector<SGateFormat> NORInputOutput
+    {
+        {0, 0, 1},
+        {0, 1, 0},
+        {1, 0, 0},
+        {1, 1, 0},
+    };
+
+    CSetupNeuralCluster test;
+    test.Setup(NORInputOutput);
+    test.Train();
+    test.Test();
+}
+
+TEST(Learning, OR_Example)
+{
+    std::vector<SGateFormat> ORInputOutput
+    {
+        {0, 0, 0},
+        {0, 1, 1},
+        {1, 0, 1},
+        {1, 1, 1},
+    };
+
+    CSetupNeuralCluster test;
+    test.Setup(ORInputOutput);
+    test.Train();
+    test.Test();
+}
+
 TEST(Learning, AND_Example)
 {
     std::vector<SGateFormat> ANDInputOutput
@@ -60,18 +92,3 @@ TEST(Learning, NAND_Example)
     test.Test();
 }
 
-TEST(Learning, NOR_Example)
-{
-    std::vector<SGateFormat> NORInputOutput
-    {
-        {0, 0, 1},
-        {0, 1, 0},
-        {1, 0, 0},
-        {1, 1, 0},
-    };
-
-    CSetupNeuralCluster test;
-    test.Setup(NORInputOutput);
-    test.Train();
-    test.Test();
-}

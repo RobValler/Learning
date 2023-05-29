@@ -82,21 +82,16 @@ void CNeuron::UpdateNeuronBias()
     m_bias_weight += update_weight;
 }
 
-void CNeuron::UpdateHiddenSynapseWeight(const std::string& id, const float derivative)
+void CNeuron::UpdateHiddenSynapseWeight()
 {
-    for(auto& it: m_listOfConnectedSynapses)
-    {
-        if(id == it.GetID()) {
-            it.UpdateHiddenWeight(m_output_derivative);
-            return;
-        }
+    for(auto& it: m_listOfConnectedSynapses) {
+        it.UpdateHiddenWeight(m_output_derivative);
     }
-    std::cout << "UpdateSynapseWeight Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
+    UpdateNeuronBias();
 }
 
 void CNeuron::UpdateOutputSynapseWeight(const std::string& id, const float activation)
 {
-
     for(auto& it: m_listOfConnectedSynapses)
     {
         if(id == it.GetID()) {

@@ -17,7 +17,7 @@
 #include <iostream>
 
 namespace {
-    constexpr int l_training_loops = 5000;
+    constexpr int l_training_loops = 15000;
 }
 
 void CSetupNeuralCluster::Setup(const std::vector<SGateFormat>& InputTable)
@@ -78,13 +78,8 @@ void CSetupNeuralCluster::Train()
             n2->SetHiddenDerive(n3->GetDerive(), n3->GetSynapseWeight("w32"));
 
             // Update the weights (inputs and bias)
-            n1->UpdateHiddenSynapseWeight("w11", n1->GetDerive());
-            n1->UpdateHiddenSynapseWeight("w21", n1->GetDerive());
-            n1->UpdateNeuronBias();
-
-            n2->UpdateHiddenSynapseWeight("w12", n2->GetDerive());
-            n2->UpdateHiddenSynapseWeight("w22", n2->GetDerive());
-            n2->UpdateNeuronBias();
+            n1->UpdateHiddenSynapseWeight();
+            n2->UpdateHiddenSynapseWeight();
 
             n3->UpdateOutputSynapseWeight("w31", n1->GetOutput());
             n3->UpdateOutputSynapseWeight("w32", n2->GetOutput());

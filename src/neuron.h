@@ -34,7 +34,7 @@ public:
     void AddSynapse(const std::string name);
     void SetSynapseInput(const std::string& id, const float input);
     void UpdateNeuronBias();
-    void UpdateHiddenSynapseWeight(const std::string& id, const float weight);
+    void UpdateHiddenSynapseWeight();
     void UpdateOutputSynapseWeight(const std::string& id, const float activation);
     float GetSynapseWeight(const std::string& id);
     float GetOutput() const;
