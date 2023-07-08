@@ -29,16 +29,16 @@ void CSetupNeuralCluster::Setup(const std::vector<SGateFormat>& InputTable)
     m_InputTable = InputTable;
 
     // hidden layer
-    n1 = std::make_shared<CNeuron>("hidden_1", CNeuron::ENeuronType::EHidden);
+    n1 = std::make_shared<CNeuron>("hidden_1", ENeuronType::EHidden);
     n1->AddSynapse("w11");   // Input 1 / A
     n1->AddSynapse("w21");   // Input 2 / B
 
-    n2 = std::make_shared<CNeuron>("hidden_2", CNeuron::ENeuronType::EHidden);
+    n2 = std::make_shared<CNeuron>("hidden_2", ENeuronType::EHidden);
     n2->AddSynapse("w12");   // Input 1 / A
     n2->AddSynapse("w22");   // Input 2 / B
 
     // output layer
-    n3 = std::make_shared<CNeuron>("output", CNeuron::ENeuronType::EOutput);
+    n3 = std::make_shared<CNeuron>("output", ENeuronType::EOutput);
     n3->AddSynapse("w31");   // Hidden 1
     n3->AddSynapse("w32");   // Hidden 2
 }

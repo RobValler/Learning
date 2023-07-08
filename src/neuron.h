@@ -10,19 +10,14 @@
 #pragma once
 
 #include "synapse.h"
+#include "constants.h"
 
 #include <vector>
 #include <string>
-#include <cstdint>
 
 class CNeuron
 {
 public:
-    enum class ENeuronType : std::uint8_t {
-        EHidden =0,
-        EOutput
-    };
-
     CNeuron(std::string name, ENeuronType type);
     ~CNeuron() =default;
 
@@ -39,6 +34,9 @@ public:
     float GetSynapseWeight(const std::string& id);
     float GetOutput() const;
     void Reset();
+    std::string GetName() {
+        return m_neuron_name;
+    }
 
 private:
     std::string m_neuron_name;

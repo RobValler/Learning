@@ -12,6 +12,17 @@
 #include <gtest/gtest.h>
 #include <vector>
 
+#include "cluster.h"
+
+
+TEST(Proto, type)
+{
+    CNeuralCluster test;
+
+    test.Init();
+
+}
+
 TEST(Learning, XOR_Example)
 {
     std::vector<SGateFormat> XORInputOutput
