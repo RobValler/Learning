@@ -1,5 +1,5 @@
 /*****************************************************************
- * Copyright (C) 2017-2022 Robert Valler - All rights reserved.
+ * Copyright (C) 2017-2023 Robert Valler - All rights reserved.
  *
  * This file is part of the project: Learning
  *
