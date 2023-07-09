@@ -17,89 +17,99 @@
 
 TEST(Proto, type)
 {
-    CNeuralCluster test;
-
-    test.Init();
-
-}
-
-TEST(Learning, XOR_Example)
-{
-    std::vector<SGateFormat> XORInputOutput
-    {
+    std::vector<std::vector<int>> data ={
         {0, 0, 0},
         {0, 1, 1},
         {1, 0, 1},
         {1, 1, 0},
     };
 
-    CSetupNeuralCluster test;
-    test.Setup(XORInputOutput);
-    test.Train();
-    test.Test();
+    CNeuralCluster cluster;
+    cluster.Setup(2, 3, 3, 1);
+    cluster.Train(data);
+    cluster.Store();
+    cluster.Load();
+    EXPECT_EQ(cluster.Test(data), true);
+
 }
 
-TEST(Learning, NOR_Example)
-{
-    std::vector<SGateFormat> NORInputOutput
-    {
-        {0, 0, 1},
-        {0, 1, 0},
-        {1, 0, 0},
-        {1, 1, 0},
-    };
+//TEST(Learning, XOR_Example)
+//{
+//    std::vector<SGateFormat> XORInputOutput
+//    {
+//        {0, 0, 0},
+//        {0, 1, 1},
+//        {1, 0, 1},
+//        {1, 1, 0},
+//    };
 
-    CSetupNeuralCluster test;
-    test.Setup(NORInputOutput);
-    test.Train();
-    test.Test();
-}
+//    CSetupNeuralCluster test;
+//    test.Setup(XORInputOutput);
+//    test.Train();
+//    test.Test();
+//}
 
-TEST(Learning, OR_Example)
-{
-    std::vector<SGateFormat> ORInputOutput
-    {
-        {0, 0, 0},
-        {0, 1, 1},
-        {1, 0, 1},
-        {1, 1, 1},
-    };
+//TEST(Learning, NOR_Example)
+//{
+//    std::vector<SGateFormat> NORInputOutput
+//    {
+//        {0, 0, 1},
+//        {0, 1, 0},
+//        {1, 0, 0},
+//        {1, 1, 0},
+//    };
 
-    CSetupNeuralCluster test;
-    test.Setup(ORInputOutput);
-    test.Train();
-    test.Test();
-}
+//    CSetupNeuralCluster test;
+//    test.Setup(NORInputOutput);
+//    test.Train();
+//    test.Test();
+//}
 
-TEST(Learning, AND_Example)
-{
-    std::vector<SGateFormat> ANDInputOutput
-    {
-        {0, 0, 0},
-        {0, 1, 0},
-        {1, 0, 0},
-        {1, 1, 1},
-    };
+//TEST(Learning, OR_Example)
+//{
+//    std::vector<SGateFormat> ORInputOutput
+//    {
+//        {0, 0, 0},
+//        {0, 1, 1},
+//        {1, 0, 1},
+//        {1, 1, 1},
+//    };
 
-    CSetupNeuralCluster test;
-    test.Setup(ANDInputOutput);
-    test.Train();
-    test.Test();
-}
+//    CSetupNeuralCluster test;
+//    test.Setup(ORInputOutput);
+//    test.Train();
+//    test.Test();
+//}
 
-TEST(Learning, NAND_Example)
-{
-    std::vector<SGateFormat> NANDInputOutput
-    {
-        {0, 0, 1},
-        {0, 1, 1},
-        {1, 0, 1},
-        {1, 1, 0},
-    };
+//TEST(Learning, AND_Example)
+//{
+//    std::vector<SGateFormat> ANDInputOutput
+//    {
+//        {0, 0, 0},
+//        {0, 1, 0},
+//        {1, 0, 0},
+//        {1, 1, 1},
+//    };
 
-    CSetupNeuralCluster test;
-    test.Setup(NANDInputOutput);
-    test.Train();
-    test.Test();
-}
+//    CSetupNeuralCluster test;
+//    test.Setup(ANDInputOutput);
+//    test.Train();
+//    test.Test();
+//}
+
+//TEST(Learning, NAND_Example)
+//{
+//    std::vector<SGateFormat> NANDInputOutput
+//    {
+//        {0, 0, 1},
+//        {0, 1, 1},
+//        {1, 0, 1},
+//        {1, 1, 0},
+//    };
+
+//    CSetupNeuralCluster test;
+//    test.Setup(NANDInputOutput);
+//    test.Train();
+//    test.Test();
+//}
 

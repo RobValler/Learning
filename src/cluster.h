@@ -11,52 +11,34 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
-#include "neuron.h"
 #include "constants.h"
 
+class CNeuron;
 
-struct SInputCluster
-{
-    int numOfInputs;
-    int numOfHiddenLayers;
-    int numOfNeuronsPerHiddenLayer;
-    int numOfOutputs;
-};
-
-struct SPackInput {
-    int number;
-    int value;
-};
-
-struct SPackNeuron {
-    int number;
-    std::shared_ptr<CNeuron> pneuron;  // for hidden and output layers
-};
-
-struct SPack {
+struct SLayerContainer {
     std::string layer_name;
     ENeuronType layer_type;
-    int layer_number; // used in combination with layer_type
-    std::vector<SPackInput> input_list;     // for input layer only
-    std::vector<SPackNeuron> neuron_list;   // for hidden and output layers
+    int layer_number;
+    std::vector<std::shared_ptr<CNeuron>> node_list;  ///< List of neurons/inputs .. in each layer
 };
-
-struct SCluster
-{
-    std::vector<SPack> layer_list;
-};
-
 
 class CNeuralCluster
 {
 public:
     CNeuralCluster() =default;
     ~CNeuralCluster() =default;
-    void Init();
-    void Setup(SInputCluster input);
+
+    void Setup(int numOfInputs, int numOfHiddenLayers, int numOfNeuronsPerHiddenLayer, int numOfOutputs);
+    void Train(std::vector<std::vector<int>> input_data);
+    void Store() {}
+    void Load() {}
+    bool Test(std::vector<std::vector<int>> input_data);
+
+    void ResetAllNodes();
 
 private:
-    SCluster m_cluster;
+    std::vector<SLayerContainer> layer_list;   ///< List of layers
 
 };

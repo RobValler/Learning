@@ -16,10 +16,6 @@
 #include <cmath>
 #include <iostream>
 
-namespace {
-    constexpr int l_training_loops = 15000;
-}
-
 void CSetupNeuralCluster::Setup(const std::vector<SGateFormat>& InputTable)
 {
     // ##############################################################################

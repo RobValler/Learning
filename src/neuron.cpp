@@ -71,6 +71,13 @@ void CNeuron::SetSynapseInput(const std::string& id, const float input)
     std::cout << "SetSynapseInput Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
 }
 
+void CNeuron::SetSynapseInput(const int index, const float input)
+{
+    if(index >= 0 && index < m_listOfConnectedSynapses.size()) {
+        m_listOfConnectedSynapses.at(index).SetInput(input);
+    }
+}
+
 void CNeuron::UpdateNeuronBias()
 {
     // get the gradient
@@ -82,6 +89,9 @@ void CNeuron::UpdateNeuronBias()
     m_bias_weight += update_weight;
 }
 
+
+///\ todo: integrate this function into SetHiddenDerive if possible
+/// same with UpdateOutputSynapseWeight (with SetOutputDerive)
 void CNeuron::UpdateHiddenSynapseWeight()
 {
     for(auto& it: m_listOfConnectedSynapses) {
@@ -102,6 +112,13 @@ void CNeuron::UpdateOutputSynapseWeight(const std::string& id, const float activ
     std::cout << "UpdateSynapseWeight Error, Synapse " << id << " for " << m_neuron_name << " not found" << std::endl;
 }
 
+void CNeuron::UpdateOutputSynapseWeight(const int index, const float activation)
+{
+    if(index >= 0 && index < m_listOfConnectedSynapses.size()) {
+        m_listOfConnectedSynapses.at(index).UpdateOutputWeight(m_output_derivative, activation);
+    }
+}
+
 float CNeuron::GetSynapseWeight(const std::string& id)
 {
     for(auto& it: m_listOfConnectedSynapses)
@@ -112,6 +129,15 @@ float CNeuron::GetSynapseWeight(const std::string& id)
     }
     std::cout << "GetSynapseWeight Error, Synapse " << id << " not found" << std::endl;
     return 0.0f;
+}
+
+float CNeuron::GetSynapseWeight(const int index)
+{
+    if(index >= 0 && index < m_listOfConnectedSynapses.size()) {
+        return m_listOfConnectedSynapses.at(index).GetWeight();
+    } else {
+        return 0.0f;
+    }
 }
 
 float CNeuron::GetOutput() const

@@ -12,14 +12,15 @@
 #include <cstdint>
 
 namespace {
+    constexpr int l_training_loops = 15000;
     constexpr float l_learning_rate = 1.414213562;
-    constexpr float l_momentum = 0.25;
+    constexpr float l_momentum = 0.25;    
 }
 
 
 enum class ENeuronType : std::uint8_t {
-    ENone =0,
-    EInput,
-    EHidden,
+    EHidden =0,
     EOutput
 };
+
+
