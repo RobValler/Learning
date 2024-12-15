@@ -28,7 +28,7 @@ public:
 
     void Setup(const std::vector<SGateFormat>& InputTable);
     void Train();
-    void Test();
+    bool Test();
 
 private:
     std::shared_ptr<CNeuron> n1;

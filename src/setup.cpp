@@ -106,11 +106,13 @@ void CSetupNeuralCluster::Train()
     } // learn_index
 }
 
-void CSetupNeuralCluster::Test()
+bool CSetupNeuralCluster::Test()
 {
     // ##############################################################################
     // -- Testing --
     // ##############################################################################
+
+    bool test_result = true;
 
     for(const auto& it : m_InputTable)
     {
@@ -131,6 +133,10 @@ void CSetupNeuralCluster::Test()
         // check the results
         float result = n3->GetOutput();
         std::cout << "Output = " << result << "(" << round(result) << "), expected output = " << it.Out << std::endl;
-        EXPECT_EQ(round(result), it.Out);
+        if(round(result) != it.Out) {
+            test_result = false;
+        }
     }
+
+    return test_result;
 }

@@ -6,13 +6,11 @@ set (Wall)
 set (W1)
 set (Wfloat-conversion)
 
-
-#PACKAGES
-find_package(Threads REQUIRED)
-find_package(GTest REQUIRED)
+#CONAN PACKAGES
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 #INCLUDES
-include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 #SOURCE FILES
@@ -26,7 +24,12 @@ file(GLOB HEADERS
     ${CMAKE_SOURCE_DIR}/test/*.h
 )
 
+#SOURCE FILES
+file(GLOB DATA
+    ${CMAKE_SOURCE_DIR}/conanfile.txt
+    ${CMAKE_SOURCE_DIR}/README.md
+)
+
 #GENERATE
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} )
-target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT} ${GTEST_LIBRARIES})
-
+target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
